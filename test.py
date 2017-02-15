@@ -1,39 +1,36 @@
 import cv2
 import numpy as np
 
-global redMin
-redMin =0
-global redMax
-redMax =255
-global greenMin
-greenMin =0
-global greenMax
-greenMax =255
-global blueMin
-blueMin =0
-global blueMax
-blueMax =255
-
 def updateRedMin(x):
-    print(x)
+    global redMin
     redMin = x
 def updateRedMax(x):
+    global redMax
     redMax = x
 def updateGreenMin(x):
+    global greenMin
     greenMin = x
 def updateGreenMax(x):
+    global greenMax
     greenMax = x
 def updateBlueMin(x):
+    global blueMin
     blueMin = x
 def updateBlueMax(x):
-    blueMax = x
+    global blueMax
+    blueMax =x
 
 cap = cv2.VideoCapture(0)
 cv2.namedWindow("Video")
 cv2.namedWindow("Sliders")
 cv2.namedWindow("HSV")
 cv2.namedWindow("Color Finder")
-
+redMin=0
+blueMin=0
+greenMin=0
+redMax=255
+blueMax=255
+greenMax=255
 # create trackbars for color change
 cv2.createTrackbar('Rmin','Sliders',0,255,updateRedMin)
 cv2.createTrackbar('Rmax','Sliders',255,255,updateRedMax)
@@ -49,12 +46,12 @@ while True:
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     cv2.imshow("HSV",hsv)
 # define range of selected color in HSV
-    lower_range = np.array([blueMin,greenMin,redMin])
-    upper_range = np.array([blueMax,greenMax,redMax])
+    lower_range = np.array([redMin,greenMin,blueMin])
+    upper_range = np.array([redMax,greenMax,blueMax])
 #create a mask
-    mask = cv2.inRange(hsv,lower_range,upper_range)
-    font = cv2.FONT_HERSHEY_SIMPLEX
-    print(redMin)
+    mask = cv2.inRange(img,lower_range,upper_range)
+    colormask = cv2.bitwise_and(img,img, mask= mask)
+    cv2.imshow("Color Finder", colormask);
   
     k = cv2.waitKey(1)
     if k == 27:
