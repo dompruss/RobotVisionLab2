@@ -50,6 +50,8 @@ while True:
     upper_range = np.array([redMax,greenMax,blueMax])
 #create a mask
     mask = cv2.inRange(img,lower_range,upper_range)
+    mask = cv2.dilate(mask, None, iterations=5)
+    mask = cv2.erode(mask, None,iterations=1)
     colormask = cv2.bitwise_and(img,img, mask= mask)
     cv2.imshow("Color Finder", colormask);
   
