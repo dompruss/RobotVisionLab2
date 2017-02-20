@@ -1,3 +1,8 @@
+#Dominik Pruss
+#Brandon Busby
+
+#Adapted opencv.org tutorials for some of our code usage.
+
 import cv2
 import numpy as np
 
